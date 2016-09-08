@@ -47,20 +47,14 @@ class ObjLoader(object):
                     self.normals.append(normal)
                     
                 elif line[0] == "f":
-                    string = line.replace("//","/")
+                    string = line[1:].strip().replace("//","/")
                     #---------------------------------------------------
                     i = string.find(" ")+1
-                    face  = []
-                    for item in range(string.count(" ")):
-                        if string.find(" ",i) == -1:
-                            face.append(string[i:-1])
-                            break
-                        face.append(string[i:string.find(" ",i)])
-                        i = string.find(" ",i) +1
+                    face  = string.split(' ')
                     #---------------------------------------------------
-                    if string.count("/") == 3:
+                    if string.count(" ") == 2:
                         self.triangle_faces.append(tuple(face))
-                    elif string.count("/") == 4:
+                    elif string.count(" ") == 3:
                         self.quad_faces.append(tuple(face))
                     else:
                         self.polygon_faces.append(tuple(face))
